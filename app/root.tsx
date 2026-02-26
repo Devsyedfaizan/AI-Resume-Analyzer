@@ -9,6 +9,9 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import {  useEffect } from "react";
+import { usePuterStore } from "./lib/puter";
+import Footer from "./components/Footer";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -24,6 +27,10 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const {init} = usePuterStore();
+  useEffect(() => {
+    init();
+  }, []);
   return (
     <html lang="en">
       <head>
@@ -33,7 +40,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <script src="https://js.puter.com/v2/"></script>
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
